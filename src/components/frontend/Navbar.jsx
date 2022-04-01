@@ -4,15 +4,19 @@ import { Link, useHistory} from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Navbar(){
+  
   const history = useHistory();
 
   const logoutSubmit = (e) => {
     e.preventDefault();
 
     axios.post('/api/logout').then(res => {
+      // console.log(res.data);
       if(res.data.status === 200) {
-        localStorage.removeItem("auth_token");
-        localStorage.removeItem("auth_name");
+
+        localStorage.clear()
+        // localStorage.removeItem("auth_token",res.data.token);
+        // localStorage.removeItem("auth_name",res.data.username);
         toast.success(res.data.message);
         history.push("/");
       }
