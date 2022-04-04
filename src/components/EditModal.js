@@ -1,21 +1,23 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function EditModal(props) {
   const currentDate = new Date();
-  // console.log(props.editData[0]);
-  // console.log(props.editData);
+  const [created, setcreated] = useState(
+    `${currentDate.getDate()}/${
+      currentDate.getMonth() + 1
+    }/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`
+  );
   const [editContactsInput, setEditContacts] = useState({
     email: props.editData[0].email,
     name: props.editData[0].name,
-    title: props.editData[0].title,
     phone: props.editData[0].phone,
-    created: `${currentDate.getDate()}/${
-      currentDate.getMonth() + 1
-    }/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
-    errors_list: [],
+    title: props.editData[0].title,
   });
+  useEffect(() => {
+    setEditContacts(props.editData[0]);
+  }, [props.editData[0]]);
 
   const handleInput = (e) => {
     let key = e.target.name;
@@ -31,7 +33,7 @@ export default function EditModal(props) {
       email: editContactsInput.email,
       title: editContactsInput.title,
       phone: editContactsInput.phone,
-      created: editContactsInput.created,
+      created: created,
     };
     try {
       const response = await axios.put(`/api/contacts/${props.editData[0].id}`, data);
@@ -129,7 +131,7 @@ export default function EditModal(props) {
                   <input
                     type='datetime'
                     className='form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
-                    value={editContactsInput.created}
+                    value={created}
                     name='created'
                     placeholder='Create at'
                   />

@@ -1,11 +1,11 @@
 import axios from "axios";
 import {React,useState, useEffect} from "react";
-import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 import Modal from "../Modal";
 import { toast } from "react-toastify";
 import EditModal from "../EditModal";
 import Pagination from "./Pagination";
+import queryString from "query-string"
 export default function Contacts(){
 
   const [editData, setEditData] = useState([]);
@@ -17,22 +17,39 @@ export default function Contacts(){
   
   const [searchData, SetSearchData] = useState('');
 
-  // const [pagination, setPagination] = useState({
-  //   current_page: 1,
-  //   total: 5,
-  // })
+  const [pagination, setPagination] = useState({
+    current_page: 1,
+    per_page: 5,
+    total: 6,
+  });
 
-  useEffect(()=>{
+  const [filters, setFilters] = useState({
+    page: 1,
+  })
+
+  useEffect(() => {
     const fecthContacts = async() => {
     try {
-      const response = await axios.get('/api/contacts');
+      const paramString = queryString.stringify(filters);
+      const response = await axios.get(`/api/contacts?${paramString}`);
       setContacts(response.data.data);
+      setPagination({
+        current_page: response.data.current_page,
+        per_page: response.data.per_page,
+        total: response.data.total,
+      })
     } catch (error) {
       console.log(`Error: ${error.message}`);
     }
   }
-    fecthContacts();
-  },[contacts]);
+  fecthContacts();
+  },[filters]);
+
+      const handleEditData = (id) => {
+
+      const contact_current = contacts.find(item => item.id === id);
+      setEditData([contact_current]);
+  }
 
   const addContacts = (contact) => {
     setContacts([...contacts, contact]);
@@ -40,32 +57,26 @@ export default function Contacts(){
 
   const editContacts = (contact) => {
     let listContactsCopy = [...contacts];
-    console.log(listContactsCopy);
     let objIndex = listContactsCopy.findIndex(item => item.id === contact.id);
     listContactsCopy[objIndex] = contact;
     setContacts(listContactsCopy);
   }
-
-  const handleEditData = (id) => {
-    const contact_current = contacts.find(item => item.id === id);
-    setEditData([contact_current]);
-  }
   
   const handleDeleteContacts = async(id) => {
     try {
-
       const response = await axios.delete(`api/contacts/${id}`);
       if(response.status === 200){
+        const newContactsList = contacts.filter((contact) => {
+          return contact.id !== id;
+        });
+        setContacts(newContactsList);
         toast.success("deleted Successfully");
       }
     } catch (error) {
       toast.error("You must login");
     }
 
-    const newContactsList = contacts.filter((contact) => {
-        return contact.id !== id;
-    });
-    setContacts(newContactsList);
+
   }
 
   const handleOnChangeSearch = (e) => {
@@ -82,9 +93,11 @@ export default function Contacts(){
     }
   }
 
-  // const handlePageChange = (newpage) => {
-  //   console.log(newpage);
-  // }
+  const handlePageChange = (newpage) => {
+    setFilters({
+      page: newpage,  
+    })
+  }
 
     return(
         <>
@@ -163,7 +176,7 @@ export default function Contacts(){
                       {openEditModal && <EditModal editData={editData} editContacts = {(contact) => editContacts(contact)}/>}
                       </tbody>
                     </table>
-                    {/* <Pagination pagination={pagination} onPageChange = {handlePageChange}/> */}
+                    <Pagination pagination={pagination} onPageChange = {handlePageChange}/>
                   </div>
                 </div>
               </div>

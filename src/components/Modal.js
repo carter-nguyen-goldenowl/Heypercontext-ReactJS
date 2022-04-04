@@ -13,7 +13,6 @@ export default function Modal(props) {
     created: `${currentDate.getDate()}/${
       currentDate.getMonth() + 1
     }/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
-    errors_list: [],
   });
 
   const handleInput = (e) => {
@@ -38,8 +37,18 @@ export default function Modal(props) {
       if (response.status === 201) {
         props.addContacts(response.data);
         toast.success("Created Successfully");
+        setAddContacts({
+          email: "",
+          name: "",
+          phone: "",
+          title: "",
+          created: `${currentDate.getDate()}/${
+            currentDate.getMonth() + 1
+          }/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`,
+        });
       }
     } catch (error) {
+      console.log(error);
       toast.error("You must login");
     }
   };
