@@ -1,8 +1,7 @@
 import Login from "./components/frontend/auth/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./components/frontend/Home";
 import Register from "./components/frontend/auth/Register";
-import Contacts from "./components/frontend/Contacts";
+import Home from "./components/frontend/home/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,17 +21,16 @@ axios.interceptors.request.use(function (config) {
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <Router>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-          <Route path='/contacts' component={Contacts} />
+          <Route path="/home" component={Home} />
+          <Route exact path="/" component={Login} />
+          <Route path="/register" component={Register} />
         </Switch>
       </Router>
       <ToastContainer
-        position='top-right'
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
