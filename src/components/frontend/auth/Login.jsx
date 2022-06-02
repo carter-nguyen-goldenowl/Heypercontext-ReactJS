@@ -2,16 +2,13 @@ import { React, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-
-import axios from "axios";
 import { login } from "./authSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export default function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.auth);
-  console.log(user);
 
   const [loginInput, setLogin] = useState({
     email: "",
@@ -26,34 +23,49 @@ export default function Login() {
     setLogin({ ...loginInput, [key]: val });
   };
 
-  const loginSubmit = (e) => {
+  const loginSubmit = async (e) => {
     e.preventDefault();
 
     const data = {
       email: loginInput.email,
       password: loginInput.password,
     };
-    dispatch(login(data));
+
     // try {
-    //   axios
-    //     .post("/api/login", data)
-    //     .then((res) => {
-    //       if (res.data.status === 200) {
-    //         localStorage.setItem("auth_token", res.data.token);
-    //         localStorage.setItem("auth_name", res.data.username);
-    //         localStorage.setItem("link_avt", res.data.link_avt);
-    //         toast.success(res.data.message);
-    //         history.push("/home");
-    //       } else if (res.data.status === 401) {
-    //         toast.error(res.data.message);
-    //       } else {
-    //         setLogin({ ...loginInput, errors_list: res.data.validator_errors });
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.response.data);
-    //     });
-    // } catch (error) {}
+    //   const actionResutl = await dispatch(login(data));
+    //   const listUser = unwrapResult(actionResutl);
+    //   console.log(listUser);
+    //   localStorage.setItem("auth_token", listUser.token);
+    //   localStorage.setItem("auth_name", listUser.username);
+    //   localStorage.setItem("link_avt", listUser.link_avt);
+    //   // history.push("/home");
+    //   toast.success(listUser.message);
+    // } catch (error) {
+    //   toast.error("Invalid Credentials");
+    // }
+
+    try {
+      const response = await axios.post("/api/login", data);
+      // .then((res) => {
+      //   if (res.data.status === 200) {
+      //     localStorage.setItem("auth_token", res.data.token);
+      //     localStorage.setItem("auth_name", res.data.username);
+      //     localStorage.setItem("link_avt", res.data.link_avt);
+      //     toast.success(res.data.message);
+      //     // history.push("/home");
+      //   } else if (res.data.status === 401) {
+      //     toast.error(res.data.message);
+      //   } else {
+      //     setLogin({ ...loginInput, errors_list: res.data.validator_errors });
+      //   }
+      // })
+      // .catch((error) => {
+      //   console.log(error.response.data);
+      // });
+      // console.log("test", response);
+    } catch (error) {
+      console.log("error", error.response);
+    }
   };
   return (
     <section className="h-screen">
