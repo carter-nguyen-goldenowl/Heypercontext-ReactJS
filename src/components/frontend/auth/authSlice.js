@@ -1,13 +1,14 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from '@reduxjs/toolkit';
 
-export default createSlice({
-  name: "auth",
-  initialState: {
-    status: "idle",
-    listUser: [],
-    listError: [],
+const initialState = {
+  status: 'idle',
+  listUser: [],
+  listError: [],
+  user: {
+    email: '',
+    password: '',
   },
+<<<<<<< HEAD
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -38,3 +39,29 @@ export const register = createAsyncThunk("auth/register", async (data) => {
     return res.data;
   }
 });
+=======
+};
+
+const login = (state, action) => {
+  state.user.email = action.payload;
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    login,
+  },
+});
+
+export const { actions, reducer } = authSlice;
+
+// export const login = createAsyncThunk('login', async (data) => {
+//   const res = await axios.post('/api/login', data).catch((error) => {
+//     console.log('erorr here');
+//     return error;
+//   });
+//   console.log('res here');
+//   return res.data;
+// });
+>>>>>>> 8562988b03458687fb98dde54e9f7df303a322d3

@@ -31,6 +31,9 @@ export default function Login() {
       password: loginInput.password,
     };
 
+    const response = await login();
+
+    dispatch(auth.actions.login(data));
     // try {
     //   const actionResutl = await dispatch(login(data));
     //   const listUser = unwrapResult(actionResutl);
