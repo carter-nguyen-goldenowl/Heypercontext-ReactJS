@@ -1,34 +1,34 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from '@reduxjs/toolkit';
 
-export default createSlice({
-  name: "auth",
-  initialState: {
-    status: "idle",
-    listUser: [],
-    listError: [],
+const initialState = {
+  status: 'idle',
+  listUser: [],
+  listError: [],
+  user: {
+    email: '',
+    password: '',
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(login.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.listUser = action.payload;
-        state.status = "idle";
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.listError = action.payload;
-        state.status = "idle";
-      });
+};
+
+const login = (state, action) => {
+  state.user.email = action.payload;
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    login,
   },
 });
 
-export const login = createAsyncThunk("login", async (data) => {
-  const res = await axios.post("/api/login", data).catch((error) => {
-    // console.log("erorr here");
-    return error;
-  });
-  console.log("res here");
-  return res.data;
-});
+export const { actions, reducer } = authSlice;
+
+// export const login = createAsyncThunk('login', async (data) => {
+//   const res = await axios.post('/api/login', data).catch((error) => {
+//     console.log('erorr here');
+//     return error;
+//   });
+//   console.log('res here');
+//   return res.data;
+// });

@@ -1,10 +1,11 @@
-import { React, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { React, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 
-import axios from "axios";
-import { login } from "./authSlice";
+import axios from 'axios';
+import * as auth from './authSlice';
+import { login } from '../services/Login';
 
 export default function Login() {
   const history = useHistory();
@@ -14,9 +15,9 @@ export default function Login() {
   console.log(user);
 
   const [loginInput, setLogin] = useState({
-    email: "",
-    password: "",
-    errors_list: "",
+    email: '',
+    password: '',
+    errors_list: '',
   });
 
   const handleInput = (e) => {
@@ -26,14 +27,17 @@ export default function Login() {
     setLogin({ ...loginInput, [key]: val });
   };
 
-  const loginSubmit = (e) => {
+  const loginSubmit = async (e) => {
     e.preventDefault();
 
     const data = {
       email: loginInput.email,
       password: loginInput.password,
     };
-    dispatch(login(data));
+
+    const response = await login();
+    
+    dispatch(auth.actions.login(data));
     // try {
     //   axios
     //     .post("/api/login", data)
