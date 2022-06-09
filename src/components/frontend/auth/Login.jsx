@@ -2,9 +2,8 @@ import { React, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "./authSlice";
-import { unwrapResult } from "@reduxjs/toolkit";
-import axios from "axios";
+import { api } from "../services/api";
+import * as auth from "./authSlice";
 
 export default function Login() {
   const history = useHistory();
@@ -30,44 +29,19 @@ export default function Login() {
       email: loginInput.email,
       password: loginInput.password,
     };
-
-    const response = await login();
-
-    dispatch(auth.actions.login(data));
-    // try {
-    //   const actionResutl = await dispatch(login(data));
-    //   const listUser = unwrapResult(actionResutl);
-    //   console.log(listUser);
-    //   localStorage.setItem("auth_token", listUser.token);
-    //   localStorage.setItem("auth_name", listUser.username);
-    //   localStorage.setItem("link_avt", listUser.link_avt);
-    //   // history.push("/home");
-    //   toast.success(listUser.message);
-    // } catch (error) {
-    //   toast.error("Invalid Credentials");
-    // }
-
     try {
-      const response = await axios.post("/api/login", data);
-      // .then((res) => {
-      //   if (res.data.status === 200) {
-      //     localStorage.setItem("auth_token", res.data.token);
-      //     localStorage.setItem("auth_name", res.data.username);
-      //     localStorage.setItem("link_avt", res.data.link_avt);
-      //     toast.success(res.data.message);
-      //     // history.push("/home");
-      //   } else if (res.data.status === 401) {
-      //     toast.error(res.data.message);
-      //   } else {
-      //     setLogin({ ...loginInput, errors_list: res.data.validator_errors });
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.log(error.response.data);
-      // });
-      // console.log("test", response);
+      const response = await api.login(data);
+      if (response) {
+        dispatch(auth.actions.login(response.data));
+        toast.success(response.data.message);
+        localStorage.setItem("auth_token", response.data.token);
+        localStorage.setItem("user_id", response.data.user_id);
+        localStorage.setItem("auth_name", response.data.username);
+        localStorage.setItem("link_avt", response.data.link_avt);
+        history.push("/home");
+      }
     } catch (error) {
-      console.log("error", error.response);
+      toast.error(error.response.data.message);
     }
   };
   return (

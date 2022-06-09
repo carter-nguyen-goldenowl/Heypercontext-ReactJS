@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import * as auth from "./authSlice";
+import { api } from "../services/api";
 
 export default function Register() {
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [registerInput, setRegister] = useState({
@@ -21,7 +24,7 @@ export default function Register() {
     setRegister({ ...registerInput, [key]: val });
   };
 
-  const registerSubmit = (e) => {
+  const registerSubmit = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -30,20 +33,19 @@ export default function Register() {
       password: registerInput.password,
       confirm_password: registerInput.confirm_password,
     };
-
     try {
-      axios.post("/api/register", data).then((res) => {
-        if (res.data.status === 200) {
-          toast.success(res.data.message);
-          history.push("/");
-        } else {
-          setRegister({
-            ...registerInput,
-            errors_list: res.data.validator_errors,
-          });
-        }
+      const response = await api.register(data);
+      if (response.data.status === 200) {
+        toast.success(response.data.message);
+        dispatch(auth.actions.register(response.data.email));
+        history.push("/");
+      }
+    } catch (error) {
+      setRegister({
+        ...registerInput,
+        errors_list: error.response.data.errors,
       });
-    } catch (error) {}
+    }
   };
 
   return (
@@ -69,12 +71,9 @@ export default function Register() {
                   placeholder="Name"
                   required
                 />
-                <span
-                  className="py-5 px-6 mb-4 text-base text-red-700"
-                  role="alert"
-                >
+                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
                   {registerInput.errors_list.name}
-                </span>
+                </p>
               </div>
               <div className="mb-6">
                 <input
@@ -86,12 +85,9 @@ export default function Register() {
                   placeholder="Email address"
                   required
                 />
-                <span
-                  className="py-5 px-6 mb-4 text-base text-red-700"
-                  role="alert"
-                >
+                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
                   {registerInput.errors_list.email}
-                </span>
+                </p>
               </div>
               <div className="mb-6">
                 <input
@@ -103,12 +99,9 @@ export default function Register() {
                   placeholder="Password"
                   required
                 />
-                <span
-                  className="py-5 px-6 mb-4 text-base text-red-700"
-                  role="alert"
-                >
+                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
                   {registerInput.errors_list.password}
-                </span>
+                </p>
               </div>
 
               <div className="mb-6">
@@ -121,12 +114,9 @@ export default function Register() {
                   value={registerInput.confirm_password}
                   onChange={(e) => handleInput(e)}
                 />
-                <span
-                  className="py-5 px-6 mb-4 text-base text-red-700"
-                  role="alert"
-                >
+                <p className="mt-2 text-sm text-red-600 dark:text-red-500">
                   {registerInput.errors_list.confirm_password}
-                </span>
+                </p>
               </div>
 
               <div className="text-center lg:text-left">
