@@ -1,9 +1,29 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import ModalDeleteTask from "../Task/ModalDeleteTask";
 import ModalEditTask from "../Task/ModalEditTask";
 import Task from "../Task/Task";
+import { useDispatch } from "react-redux";
+import * as authSlice from "../auth/authSlice";
+import { useHistory } from "react-router-dom";
+import { api } from "../services/api";
+import { toast } from "react-toastify";
 
 export default function Nabar() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const logOut = () => {
+    try {
+      const response = api.logout();
+      if (response) {
+        dispatch(authSlice.actions.logout());
+        history.push("/");
+        localStorage.clear();
+        toast.success(response.data.data.message);
+      }
+    } catch (error) {}
+  };
   return (
     <header className="w-full shadow-lg bg-white dark:bg-gray-700 items-center h-16 rounded-2xl z-40">
       <div className="relative z-20 flex flex-col justify-center h-full px-3 mx-auto flex-center">
@@ -42,7 +62,6 @@ export default function Nabar() {
             <button
               className="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 ml-10"
               type="button"
-              // data-modal-toggle="extralarge-modal"
               data-bs-toggle="modal"
               data-bs-target="#createModal"
             >
@@ -53,7 +72,7 @@ export default function Nabar() {
             <h1 className="text-neutral-50 mr-4">
               Hi {localStorage.getItem("auth_name")}
             </h1>
-            <a href="#" className="block relative">
+            <a className="block relative">
               <img
                 alt="profil"
                 src={localStorage.getItem("link_avt")}
@@ -61,6 +80,14 @@ export default function Nabar() {
               />
             </a>
           </div>
+          <a>
+            <FontAwesomeIcon
+              icon={faSignOut}
+              className=" dark:text-white ml-2"
+              size="lg"
+              onClick={() => logOut()}
+            />
+          </a>
         </div>
       </div>
       <Task />

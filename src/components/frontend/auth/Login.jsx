@@ -38,7 +38,7 @@ export default function Login() {
         localStorage.setItem("user_id", response.data.user_id);
         localStorage.setItem("auth_name", response.data.username);
         localStorage.setItem("link_avt", response.data.link_avt);
-        history.push("/home");
+        history.push("/task");
       }
     } catch (error) {
       toast.error(error.response.data.message);

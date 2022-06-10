@@ -23,6 +23,13 @@ const deleteTask = (id) => localAxios.delete(`api/task/${id}`);
 
 const deleteTodoTask = (id) => localAxios.delete(`api/todotask/${id}`);
 
+const createMeeting = (data) => localAxios.post("api/meeting", data);
+
+const fetchMeeting = () => localAxios.get("/api/meeting");
+
+const deleteMeeting = ($meeting_id) =>
+  localAxios.delete(`/api/meeting/${$meeting_id}`);
+
 export const api = {
   login,
   register,
@@ -35,4 +42,7 @@ export const api = {
   updateTask,
   deleteTask,
   deleteTodoTask,
+  createMeeting,
+  fetchMeeting,
+  deleteMeeting,
 };

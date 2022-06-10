@@ -5,18 +5,27 @@ import Meeting from "./components/frontend/meeting/Meeting";
 import Home from "./components/frontend/home/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 function App() {
+  const isLogin = useSelector((state) => state.auth.isLogin);
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/home" component={Home} />
           <Route exact path="/" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/meeting" component={Meeting} />
+          {isLogin == true ? (
+            <>
+              <Route path="/task" component={Home} />
+              <Route path="/meeting" component={Meeting} />
+            </>
+          ) : (
+            ""
+          )}
         </Switch>
       </Router>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}

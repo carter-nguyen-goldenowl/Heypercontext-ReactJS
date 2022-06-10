@@ -20,12 +20,21 @@ const register = (state, action) => {
   state.user.email = action.payload;
 };
 
+const logout = (state) => {
+  state.user.emai = "";
+  state.user.token = "";
+  state.user.token = "";
+  state.user.link_avt = "";
+  state.isLogin = false;
+};
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     login,
     register,
+    logout,
   },
 });
 

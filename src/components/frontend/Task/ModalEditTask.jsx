@@ -8,15 +8,7 @@ import { api } from "../services/api";
 import { toast } from "react-toastify";
 export default function ModalEditTask() {
   const task = useSelector((state) => state.task.editTask);
-
   const dispatch = useDispatch();
-
-  // if (task.user_tag) {
-  //   const data = task.user_tag.filter(function (user) {
-  //     return user.label == "label";
-  //   });
-  //   console.log(data);
-  // }
 
   const [userTag, setUserTag] = useState([]);
 
@@ -89,6 +81,7 @@ export default function ModalEditTask() {
     }
     fetchUser();
   }, []);
+
   return (
     <div
       id="editModal"
@@ -141,7 +134,6 @@ export default function ModalEditTask() {
                     placeholder="Task"
                     required
                   />
-                  <p className="mt-2 text-sm text-red-600 dark:text-red-500"></p>
                 </div>
                 <div>
                   <label
@@ -174,6 +166,9 @@ export default function ModalEditTask() {
                       <DatePicker
                         placeholderText="start date"
                         selected={new Date(editTask.start_date)}
+                        selectsStart
+                        startDate={new Date(editTask.start_date)}
+                        endDate={new Date(editTask.end_date)}
                         onChange={(date) =>
                           setEditTask({
                             ...editTask,
@@ -193,6 +188,10 @@ export default function ModalEditTask() {
                             ? new Date()
                             : new Date(editTask.end_date)
                         }
+                        selectsEnd
+                        startDate={new Date(editTask.start_date)}
+                        endDate={new Date(editTask.end_date)}
+                        minDate={new Date(editTask.start_date)}
                         onChange={(date) =>
                           setEditTask({
                             ...editTask,
@@ -201,7 +200,6 @@ export default function ModalEditTask() {
                         }
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
-                      <p className="mt-2 absolute text-sm text-red-600 dark:text-red-500"></p>
                     </div>
                   </div>
                 </div>
@@ -216,9 +214,7 @@ export default function ModalEditTask() {
                     isMulti={true}
                     options={userTag}
                     onChange={onChangeUserTag}
-                    // value={editTask.user_tag.filter(
-                    //   (user) => user.label == "label"
-                    // )}
+                    value={JSON.parse(editTask.user_tag)}
                   />
                 </div>
                 <div>
@@ -250,6 +246,7 @@ export default function ModalEditTask() {
                     isMulti={true}
                     options={Hastag}
                     onChange={onChangeHashTag}
+                    value={JSON.parse(editTask.hash_tag)}
                   />
                 </div>
               </div>
