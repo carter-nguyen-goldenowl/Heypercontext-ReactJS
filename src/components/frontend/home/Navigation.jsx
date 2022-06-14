@@ -87,9 +87,9 @@ export default function Navigation() {
               </span>
               <span className="mx-4 text-sm font-normal">Meeting</span>
             </Link>
-            <a
+            <Link
               className="w-full font-thin uppercase text-gray-500 dark:text-gray-200 flex items-center p-4 my-2 transition-colors duration-200 justify-start hover:text-blue-500"
-              href="#"
+              to="/calendar"
             >
               <span className="text-left">
                 <svg
@@ -104,7 +104,7 @@ export default function Navigation() {
                 </svg>
               </span>
               <span className="mx-4 text-sm font-normal">Calendar</span>
-            </a>
+            </Link>
           </div>
         </nav>
       </div>

@@ -188,6 +188,7 @@ export default function Task() {
                         selected={task.start_date}
                         selectsStart
                         startDate={task.start_date}
+                        minDate={task.start_date}
                         endDate={task.end_date}
                         onChange={(date) =>
                           setTask({

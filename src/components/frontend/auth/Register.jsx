@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import * as auth from "./authSlice";
 import { api } from "../services/api";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function Register() {
+  const isLogin = useSelector((state) => state.auth.isLogin);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -47,6 +50,15 @@ export default function Register() {
       });
     }
   };
+
+  const redirect = () => {
+    if (isLogin === true) {
+      history.push("/task");
+    }
+  };
+  useEffect(() => {
+    redirect();
+  }, []);
 
   return (
     <section className="h-screen">

@@ -21,8 +21,8 @@ const register = (state, action) => {
 };
 
 const logout = (state) => {
-  state.user.emai = "";
-  state.user.token = "";
+  state.user.email = "";
+  state.user.name = "";
   state.user.token = "";
   state.user.link_avt = "";
   state.isLogin = false;

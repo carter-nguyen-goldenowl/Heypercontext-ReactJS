@@ -27,8 +27,15 @@ const createMeeting = (data) => localAxios.post("api/meeting", data);
 
 const fetchMeeting = () => localAxios.get("/api/meeting");
 
-const deleteMeeting = ($meeting_id) =>
-  localAxios.delete(`/api/meeting/${$meeting_id}`);
+const deleteMeeting = (meeting_id) =>
+  localAxios.delete(`/api/meeting/${meeting_id}`);
+
+const createEvent = (data) => localAxios.post("/api/calendar", data);
+
+const fetchEvent = () => localAxios.get("/api/calendar");
+
+const deleteEvent = (event_id) =>
+  localAxios.delete(`/api/calendar/${event_id}`);
 
 export const api = {
   login,
@@ -45,4 +52,7 @@ export const api = {
   createMeeting,
   fetchMeeting,
   deleteMeeting,
+  createEvent,
+  fetchEvent,
+  deleteEvent,
 };

@@ -69,7 +69,11 @@ export default function FetchTask(props) {
                 </span>
               </div>
             </div>
-            <Options data={props.data.id} />
+            {props.data.createBy === localStorage.getItem("auth_name") ? (
+              <Options data={props.data.id} />
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex items-center justify-between mb-4 space-x-12">
             {props.data.status == 100 ? (
@@ -128,7 +132,8 @@ export default function FetchTask(props) {
           </div>
           <div className=" dark:text-white mt-4">{props.data.description}</div>
           <span className="px-2 py-1 flex w-36 mt-4 items-center text-xs rounded-md font-semibold text-yellow-500 bg-yellow-100">
-            DUE DATE: {moment(props.data.end_date).format("DD MMM")}
+            START DATE: {moment(props.data.start_date).format("DD MMM")} DUE
+            DATE: {moment(props.data.end_date).format("DD MMM")}
           </span>
         </div>
       </div>
