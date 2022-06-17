@@ -89,6 +89,10 @@ const deleteTodoTask = (state, action) => {
   state.listTask = state.listTask;
 };
 
+const searchTask = (state, action) => {
+  state.listTask = action.payload;
+};
+
 const taskSlice = createSlice({
   name: "task",
   initialState,
@@ -100,6 +104,7 @@ const taskSlice = createSlice({
     handleEditData,
     deleteTask,
     deleteTodoTask,
+    searchTask,
   },
 });
 

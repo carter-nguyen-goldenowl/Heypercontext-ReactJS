@@ -168,7 +168,7 @@ export default function ModalEditTask() {
                         selected={new Date(editTask.start_date)}
                         selectsStart
                         startDate={new Date(editTask.start_date)}
-                        minDate={new Date(editTask.start_date)}
+                        minDate={moment().toDate()}
                         endDate={new Date(editTask.end_date)}
                         onChange={(date) =>
                           setEditTask({

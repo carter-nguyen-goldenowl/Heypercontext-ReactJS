@@ -41,9 +41,6 @@ export default function ModalNewMeeting() {
       toast.error(error.response.data.message);
     }
   };
-
-  const now = moment();
-
   return (
     <div
       id="newmeeting"
@@ -152,21 +149,18 @@ export default function ModalNewMeeting() {
                     Start time
                   </label>
                   <DatePicker
-                    isClearable
                     placeholderText="start time"
                     selected={meeting.start_time}
                     showTimeSelect
                     dateFormat="MMMM d, yyyy h:mmaa"
-                    minDate={meeting.start_time}
-                    // minTime={new Date(new Date().setHours(0, 0, 0, 0))}
-                    // maxTime={new Date(new Date().setHours(23, 59, 0, 0))}
-                    // // timeFormat="HH:mm"
+                    timeFormat="HH:mm"
+                    minDate={moment().toDate()}
+                    {...(moment(meeting.start_time).isSame(moment(), "day") && {
+                      minTime: new Date(moment(moment().toDate())),
+                      maxTime: new Date(moment().endOf("day")),
+                    })}
                     timeIntervals={15}
-                    // minTime={moment(meeting.start_time).format("p")}
-                    // maxTime="12:00 PM"
-                    // minTime={now.hours(now.hour()).minutes(now.minutes())}
-                    // maxTime={now.hours(23).minutes(45)}
-                    onChange={(date) =>         
+                    onChange={(date) =>
                       setMeeting({
                         ...meeting,
                         start_time: date,

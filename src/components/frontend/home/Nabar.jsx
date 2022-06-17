@@ -6,9 +6,11 @@ import ModalEditTask from "../Task/ModalEditTask";
 import Task from "../Task/Task";
 import { useDispatch } from "react-redux";
 import * as authSlice from "../auth/authSlice";
+import * as taskSlice from "../Task/taskSlice";
 import { useHistory } from "react-router-dom";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
+import PostFilterForm from "./PostFilterForm";
 
 export default function Nabar() {
   const history = useHistory();
@@ -21,6 +23,20 @@ export default function Nabar() {
         history.push("/");
         localStorage.clear();
         toast.success(response.data.data.message);
+      }
+    } catch (error) {}
+  };
+
+  const hanldeFiltersChange = async (searchName) => {
+    try {
+      if (searchName.searchName === "") {
+        const response = await api.fetchTask();
+        dispatch(taskSlice.actions.fetchTask(response.data.data));
+      } else {
+        const response = await api.searchTask(searchName.searchName);
+        if (response) {
+          dispatch(taskSlice.actions.searchTask(response.data.data));
+        }
       }
     } catch (error) {}
   };
@@ -50,14 +66,7 @@ export default function Nabar() {
               >
                 <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
               </svg>
-              <input
-                type="text"
-                className="block w-full py-1.5 pl-10 pr-4 leading-normal rounded-2xl focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ring-opacity-90 bg-gray-100 dark:bg-gray-800 text-gray-400 aa-input"
-                placeholder="Search"
-              />
-              <div className="absolute right-0 hidden h-auto px-2 py-1 mr-2 text-xs text-gray-400 border border-gray-300 rounded-2xl md:block">
-                +
-              </div>
+              <PostFilterForm onSubmit={hanldeFiltersChange} />
             </div>
             <button
               className="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 ml-10"

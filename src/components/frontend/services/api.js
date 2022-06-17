@@ -10,6 +10,8 @@ const createTask = (data) => localAxios.post("/api/task", data);
 
 const fetchTask = () => localAxios.get("/api/task");
 
+const searchTask = (name) => localAxios.get(`/api/task/search/${name}`);
+
 const getAllUser = () => localAxios.get("api/user");
 
 const createTodoTask = (data) => localAxios.post("/api/todotask", data);
@@ -43,6 +45,7 @@ export const api = {
   logout,
   createTask,
   fetchTask,
+  searchTask,
   getAllUser,
   createTodoTask,
   changeStatusTodoTask,

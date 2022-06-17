@@ -132,7 +132,13 @@ export default function ModalCalendar() {
                     selectsStart
                     showTimeSelect
                     dateFormat="MMMM d, yyyy h:mmaa"
-                    minDate={event.start_time}
+                    timeFormat="HH:mm"
+                    minDate={moment().toDate()}
+                    {...(moment(event.start_time).isSame(moment(), "day") && {
+                      minTime: new Date(moment(moment().toDate())),
+                      maxTime: new Date(moment().endOf("day")),
+                    })}
+                    timeIntervals={15}
                     startDate={event.start_time}
                     endDate={event.end_time}
                     onChange={(date) =>
@@ -153,6 +159,7 @@ export default function ModalCalendar() {
                     End time
                   </label>
                   <DatePicker
+                    isClearable
                     placeholderText="end time"
                     selected={event.end_time}
                     showTimeSelect
@@ -160,7 +167,13 @@ export default function ModalCalendar() {
                     selectsEnd
                     startDate={event.start_time}
                     endDate={event.end_time}
+                    timeFormat="HH:mm"
                     minDate={event.start_time}
+                    {...{
+                      minTime: new Date(moment(event.start_time)),
+                      maxTime: new Date(moment().endOf("day")),
+                    }}
+                    timeIntervals={15}
                     onChange={(date) =>
                       setEvent({
                         ...event,

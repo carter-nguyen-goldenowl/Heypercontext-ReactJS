@@ -116,9 +116,9 @@ export default function FetchTask(props) {
             </div>
             <Progress percent={percent} className="white-text" />
           </div>
-          <div className="flex items-center justify-start my-4 space-x-4">
-            {hash_tag.map((tag) => (
-              <span className=" relative px-2 py-1 flex items-center text-xs rounded-md font-semibold text-blue-500 bg-blue-50">
+          <div className="flex flex-wrap items-center justify-start my-4 space-x-4">
+            {hash_tag?.map((tag) => (
+              <span className=" relative px-2 mt-2 py-1 flex items-center text-xs rounded-md font-semibold text-blue-500 bg-blue-50">
                 {tag.label}
               </span>
             ))}
