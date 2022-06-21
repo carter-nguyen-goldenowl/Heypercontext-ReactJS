@@ -46,7 +46,6 @@ export default function ModalCalendar() {
 
     try {
       const response = await api.createEvent(data);
-      console.log(response);
       if (response) {
         dispatch(eventSlice.actions.createEvent(response.data.data));
         toast.success(response.data.message);
@@ -169,10 +168,6 @@ export default function ModalCalendar() {
                     endDate={event.end_time}
                     timeFormat="HH:mm"
                     minDate={event.start_time}
-                    {...{
-                      minTime: new Date(moment(event.start_time)),
-                      maxTime: new Date(moment().endOf("day")),
-                    }}
                     timeIntervals={15}
                     onChange={(date) =>
                       setEvent({

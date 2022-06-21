@@ -1,10 +1,5 @@
 import Login from "./components/frontend/auth/Login";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Register from "./components/frontend/auth/Register";
 import Meeting from "./components/frontend/meeting/Meeting";
 import Home from "./components/frontend/home/Home";

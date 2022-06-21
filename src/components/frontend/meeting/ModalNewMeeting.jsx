@@ -152,6 +152,7 @@ export default function ModalNewMeeting() {
                     placeholderText="start time"
                     selected={meeting.start_time}
                     showTimeSelect
+                    withPortal
                     dateFormat="MMMM d, yyyy h:mmaa"
                     timeFormat="HH:mm"
                     minDate={moment().toDate()}
