@@ -31,6 +31,7 @@ const initialState = {
     description: null,
   },
   listTask: [],
+  flag: false,
 };
 
 const createTask = (state, action) => {
@@ -53,6 +54,7 @@ const createTodoTask = (state, action) => {
   state.newTodoTask.id = action.payload.id;
   state.newTodoTask.task_id = action.payload.task_id;
   state.newTodoTask.todotask = action.payload.todo;
+  state.newTodoTask.status = 0;
 };
 
 const changeStatusTodoTask = (state, action) => {
@@ -79,14 +81,20 @@ const deleteTask = (state, action) => {
   state.listTask = state.listTask.filter((task) => task.id !== action.payload);
 };
 
+const setFlag = (state) => {
+  state.flag = false;
+};
+
 const deleteTodoTask = (state, action) => {
   const task = state.listTask.find(
     (task) => task.id === action.payload.task_id
   );
+
   task.todo_tasks = task.todo_tasks.filter(
     (todo) => todo.id !== action.payload.todo_id
   );
   state.listTask = state.listTask;
+  state.flag = true;
 };
 
 const searchTask = (state, action) => {
@@ -102,6 +110,7 @@ const taskSlice = createSlice({
     createTodoTask,
     changeStatusTodoTask,
     handleEditData,
+    setFlag,
     deleteTask,
     deleteTodoTask,
     searchTask,

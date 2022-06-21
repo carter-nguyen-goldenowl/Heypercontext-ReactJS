@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as taskSlice from "../Task/taskSlice";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
+
 export default function ModalEditTask() {
   const task = useSelector((state) => state.task.editTask);
   const dispatch = useDispatch();
@@ -90,7 +91,7 @@ export default function ModalEditTask() {
       aria-hidden="true"
       className="modal fade hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
     >
-      <div className="modal-dialog relative p-4 mx-24 my-12 w-full max-w-7xl h-full md:h-auto">
+      <div className="modal-dialog relative p-4 mx-auto mt-44 w-full max-w-7xl h-full md:h-auto">
         <div className="modal-content relative bg-white rounded-lg shadow dark:bg-gray-700">
           <div className="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">

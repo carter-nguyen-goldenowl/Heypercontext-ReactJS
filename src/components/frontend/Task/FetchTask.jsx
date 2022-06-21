@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
 import TodoTask from "./TodoTask/TodoTask";
 import { Progress } from "antd";
@@ -80,13 +80,14 @@ export default function FetchTask(props) {
               <span className="px-2 py-1 flex items-center font-semibold text-xs rounded-md text-red-500 bg-gray-200">
                 PENNDING
               </span>
-            ) : props.data.status == 200 ? (
-              <span className="px-2 py-1 flex items-center font-semibold text-xs rounded-md text-blue-500 bg-gray-200">
-                PROGRESS
-              </span>
-            ) : (
+            ) : props.data.sum_done == props.data.sum_todo &&
+              props.data.sum_done != 0 ? (
               <span className="px-2 py-1 flex items-center font-semibold text-xs rounded-md text-green-500 bg-gray-200">
                 COMPLETED
+              </span>
+            ) : (
+              <span className="px-2 py-1 flex items-center font-semibold text-xs rounded-md text-blue-500 bg-gray-200">
+                PROGRESS
               </span>
             )}
 

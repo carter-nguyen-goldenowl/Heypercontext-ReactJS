@@ -34,6 +34,7 @@ export default function TodoTask(props) {
         todo_id: id,
       };
 
+      dispatch(taskSlice.actions.setFlag());
       const response = await api.deleteTodoTask(id);
       if (response.data.data == true) {
         dispatch(taskSlice.actions.deleteTodoTask(payload));

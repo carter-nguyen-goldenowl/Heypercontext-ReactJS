@@ -8,6 +8,7 @@ export default function Main() {
   const dispatch = useDispatch();
   const listTask = useSelector((state) => state.task.listTask);
   const task = useSelector((state) => state.task.newTask);
+  const flag = useSelector((state) => state.task.flag);
   const todoTask = useSelector((state) => state.task.newTodoTask);
 
   async function fetchData() {
@@ -16,7 +17,7 @@ export default function Main() {
   }
   useEffect(() => {
     fetchData();
-  }, [task, todoTask]);
+  }, [task, todoTask, flag]);
 
   return (
     <div className="overflow-auto h-screen pb-24 pt-2 pr-2 pl-2 md:pt-0 md:pr-0 md:pl-0">

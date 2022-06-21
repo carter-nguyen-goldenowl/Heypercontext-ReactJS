@@ -113,7 +113,7 @@ export default function DailyMeeting(props) {
                   </>
                 ))}
               </td>
-              <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
+              <td className="border p-1 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
                 {props.data.map((meeting) => (
                   <>
                     {moment(meeting.start_time).week() ===
@@ -137,7 +137,7 @@ export default function DailyMeeting(props) {
                   </>
                 ))}
               </td>
-              <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
+              <td className="border p-1 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
                 {props.data.map((meeting) => (
                   <>
                     {moment(meeting.start_time).week() ===
@@ -161,13 +161,13 @@ export default function DailyMeeting(props) {
                   </>
                 ))}
               </td>
-              <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
+              <td className=" relative border p-1 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
                 {props.data.map((meeting) => (
                   <>
                     {moment(meeting.start_time).week() ===
                       moment(startDate).week() &&
                     moment(meeting.start_time).isoWeekday() === 3 ? (
-                      <div className="xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+                      <div className=" xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
                         <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer">
                           <div className="event bg-blue-400 text-white rounded p-1 text-sm mb-1">
                             <span className="event-name">
@@ -185,7 +185,7 @@ export default function DailyMeeting(props) {
                   </>
                 ))}
               </td>
-              <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
+              <td className="border p-1 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
                 {props.data.map((meeting) => (
                   <>
                     {moment(meeting.start_time).week() ===
@@ -209,7 +209,7 @@ export default function DailyMeeting(props) {
                   </>
                 ))}
               </td>
-              <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-hidden transition cursor-pointer duration-500 ease hover:bg-gray-300">
+              <td className="border p-1 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-hidden transition cursor-pointer duration-500 ease hover:bg-gray-300">
                 {props.data.map((meeting) => (
                   <>
                     {moment(meeting.start_time).week() ===
@@ -233,7 +233,7 @@ export default function DailyMeeting(props) {
                   </>
                 ))}
               </td>
-              <td className="border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
+              <td className="border p-1 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
                 {props.data.map((meeting) => (
                   <>
                     {moment(meeting.start_time).week() ===
