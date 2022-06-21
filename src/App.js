@@ -1,34 +1,33 @@
 import Login from "./components/frontend/auth/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Register from "./components/frontend/auth/Register";
+import Meeting from "./components/frontend/meeting/Meeting";
 import Home from "./components/frontend/home/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import axios from "axios";
-
-axios.defaults.baseURL = "http://127.0.0.1:8000/";
-axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.post["Accept"] = "application/json";
-
-axios.defaults.withCredentials = true;
-
-axios.interceptors.request.use(function (config) {
-  const token = localStorage.getItem("auth_token");
-  config.headers.Authorization = token ? `Bearer ${token} ` : "";
-  return config;
-});
+import { useSelector } from "react-redux";
+import Calendar from "./components/frontend/Calendar/Calendar";
 
 function App() {
+  const isLogin = useSelector((state) => state.auth.isLogin);
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/home" component={Home} />
           <Route exact path="/" component={Login} />
           <Route path="/register" component={Register} />
+          {isLogin === true ? (
+            <>
+              <Route path="/task" component={Home} />
+              <Route path="/meeting" component={Meeting} />
+              <Route path="/calendar" component={Calendar} />
+            </>
+          ) : (
+            ""
+          )}
         </Switch>
       </Router>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}
